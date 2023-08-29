@@ -3,29 +3,29 @@ microchip_byggern.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  00000102  2**0
+  0 .data         00000000  00800100  00800100  00000122  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000000ae  00000000  00000000  00000054  2**1
+  1 .text         000000ce  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  00000102  2**0
+  2 .comment      00000030  00000000  00000000  00000122  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000134  2**2
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000154  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000020  00000000  00000000  00000170  2**0
+  4 .debug_aranges 00000050  00000000  00000000  00000190  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   000006b3  00000000  00000000  00000190  2**0
+  5 .debug_info   000007e4  00000000  00000000  000001e0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 0000061d  00000000  00000000  00000843  2**0
+  6 .debug_abbrev 000006d1  00000000  00000000  000009c4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   0000027e  00000000  00000000  00000e60  2**0
+  7 .debug_line   00000389  00000000  00000000  00001095  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000024  00000000  00000000  000010e0  2**2
+  8 .debug_frame  00000068  00000000  00000000  00001420  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00000359  00000000  00000000  00001104  2**0
+  9 .debug_str    000003ac  00000000  00000000  00001488  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    0000002c  00000000  00000000  0000145d  2**0
+ 10 .debug_loc    00000052  00000000  00000000  00001834  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000010  00000000  00000000  00001489  2**0
+ 11 .debug_ranges 00000030  00000000  00000000  00001886  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -68,50 +68,91 @@ Disassembly of section .text:
   78:	de bf       	out	0x3e, r29	; 62
   7a:	cd bf       	out	0x3d, r28	; 61
   7c:	0e 94 44 00 	call	0x88	; 0x88 <main>
-  80:	0c 94 55 00 	jmp	0xaa	; 0xaa <_exit>
+  80:	0c 94 65 00 	jmp	0xca	; 0xca <_exit>
 
 00000084 <__bad_interrupt>:
   84:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 00000088 <main>:
 #include <util/delay_basic.h>
-
+#include "usart.h"
 
 int main(void)
 {
+	usart_init(USART_BAUD_RATE_REGISTER);
+  88:	8f e1       	ldi	r24, 0x1F	; 31
+  8a:	90 e0       	ldi	r25, 0x00	; 0
+  8c:	0e 94 5c 00 	call	0xb8	; 0xb8 <usart_init>
+	
     DDRA |= 1 << 0;
-  88:	8a b3       	in	r24, 0x1a	; 26
-  8a:	81 60       	ori	r24, 0x01	; 1
-  8c:	8a bb       	out	0x1a, r24	; 26
+  90:	8a b3       	in	r24, 0x1a	; 26
+  92:	81 60       	ori	r24, 0x01	; 1
+  94:	8a bb       	out	0x1a, r24	; 26
     /* Replace with your application code */
     while (1) 
     {
-        PORTA |= 1 << 0;
-  8e:	8b b3       	in	r24, 0x1b	; 27
-  90:	81 60       	ori	r24, 0x01	; 1
-  92:	8b bb       	out	0x1b, r24	; 27
+	    USART_Transmit('a');
+  96:	81 e6       	ldi	r24, 0x61	; 97
+  98:	0e 94 63 00 	call	0xc6	; 0xc6 <USART_Transmit>
+		PORTA |= 1 << 0;
+  9c:	8b b3       	in	r24, 0x1b	; 27
+  9e:	81 60       	ori	r24, 0x01	; 1
+  a0:	8b bb       	out	0x1b, r24	; 27
     milliseconds can be achieved.
  */
 void
 _delay_loop_2(uint16_t __count)
 {
 	__asm__ volatile (
-  94:	89 e9       	ldi	r24, 0x99	; 153
-  96:	99 e1       	ldi	r25, 0x19	; 25
-  98:	fc 01       	movw	r30, r24
-  9a:	31 97       	sbiw	r30, 0x01	; 1
-  9c:	f1 f7       	brne	.-4      	; 0x9a <main+0x12>
+  a2:	89 e9       	ldi	r24, 0x99	; 153
+  a4:	99 e1       	ldi	r25, 0x19	; 25
+  a6:	fc 01       	movw	r30, r24
+  a8:	31 97       	sbiw	r30, 0x01	; 1
+  aa:	f1 f7       	brne	.-4      	; 0xa8 <main+0x20>
         _delay_loop_2(6553);
         PORTA &= ~(1 << 0);
-  9e:	2b b3       	in	r18, 0x1b	; 27
-  a0:	2e 7f       	andi	r18, 0xFE	; 254
-  a2:	2b bb       	out	0x1b, r18	; 27
-  a4:	01 97       	sbiw	r24, 0x01	; 1
-  a6:	f1 f7       	brne	.-4      	; 0xa4 <main+0x1c>
-  a8:	f2 cf       	rjmp	.-28     	; 0x8e <main+0x6>
+  ac:	2b b3       	in	r18, 0x1b	; 27
+  ae:	2e 7f       	andi	r18, 0xFE	; 254
+  b0:	2b bb       	out	0x1b, r18	; 27
+  b2:	01 97       	sbiw	r24, 0x01	; 1
+  b4:	f1 f7       	brne	.-4      	; 0xb2 <main+0x2a>
+  b6:	ef cf       	rjmp	.-34     	; 0x96 <main+0xe>
 
-000000aa <_exit>:
-  aa:	f8 94       	cli
+000000b8 <usart_init>:
+#include "usart.h"
 
-000000ac <__stop_program>:
-  ac:	ff cf       	rjmp	.-2      	; 0xac <__stop_program>
+void usart_init(unsigned int usart_baud_rate_register)
+{
+    // Set baud rate registers
+    UBRR0H = (unsigned char)(usart_baud_rate_register>>8); // usart_baud_rate_register_high
+  b8:	90 bd       	out	0x20, r25	; 32
+    UBRR0L = (unsigned char)usart_baud_rate_register; // usart_baud_rate_register_low
+  ba:	89 b9       	out	0x09, r24	; 9
+    
+    // Enable RX and TX registers
+    UCSR0B = (1<<RXEN0) | (1<<TXEN0); // Universal Synchronous Asynchronous Receiver Transmitter Register B, RX Enable, TX Enable
+  bc:	88 e1       	ldi	r24, 0x18	; 24
+  be:	8a b9       	out	0x0a, r24	; 10
+    
+	
+    // Set frame format to 8 data bits, 2 stop bits
+    UCSR0C = (1<<URSEL0)|(1<<USBS0)|(3<<UCSZ00); // Universal Synchronous Asynchronous Receiver Transmitter Register C, USART Register Select, USART Stop Bit Select, USART Character Size Select
+  c0:	8e e8       	ldi	r24, 0x8E	; 142
+  c2:	80 bd       	out	0x20, r24	; 32
+  c4:	08 95       	ret
+
+000000c6 <USART_Transmit>:
+void USART_Transmit(unsigned char data)
+{
+    // Wait until the transmitter buffer is empty
+    //while ( !( UCSR0A & (1<<UDRE0)) ); // USART Control and Status Register A, USART Data Register Empty
+    // Send data
+    UDR0 = data; // USART Data Register
+  c6:	8c b9       	out	0x0c, r24	; 12
+  c8:	08 95       	ret
+
+000000ca <_exit>:
+  ca:	f8 94       	cli
+
+000000cc <__stop_program>:
+  cc:	ff cf       	rjmp	.-2      	; 0xcc <__stop_program>

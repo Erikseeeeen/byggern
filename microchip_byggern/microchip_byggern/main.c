@@ -17,13 +17,11 @@ int main(void)
     /* Replace with your application code */
     while (1) 
     {
-		USART_Transmit('a');
-        PORTA |= 1 << 0;
+	    USART_Transmit('a');
+		PORTA |= 1 << 0;
         _delay_loop_2(6553);
         PORTA &= ~(1 << 0);
         _delay_loop_2(6553);
     }
-	
-	
 }
 
