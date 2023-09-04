@@ -18,7 +18,7 @@ void usart_init(unsigned int usart_baud_rate_register)
 void USART_Transmit(unsigned char data)
 {
     // Wait until the transmitter buffer is empty
-    //while ( !( UCSR0A & (1<<UDRE0)) ); // USART Control and Status Register A, USART Data Register Empty
+    while ( !( UCSR0A & (1<<UDRE0)) ); // USART Control and Status Register A, USART Data Register Empty
     // Send data
     UDR0 = data; // USART Data Register
 }
