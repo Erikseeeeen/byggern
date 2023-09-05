@@ -1,13 +1,7 @@
-/*
- * microchip_byggern.c
- *
- * Created: 29.08.2023 08:46:19
- * Author : eiviser
- */ 
-
 #include <avr/io.h>
 #include <util/delay_basic.h>
 #include "usart.h"
+#include "sram_test.h"
 
 int main(void)
 {
