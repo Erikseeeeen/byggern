@@ -11,7 +11,7 @@ void xmem_init(void) {
 	// Enable XMEM
 	MCUCR |= (1 << SRE);
 	// Mask out some port C address pins for JTAG (datasheet page 32)
-	SFIOR |= 1 << XMM0;
+	SFIOR |= 1 << XMM2;
 	SFIOR &= ~(1 << XMM0 | 1 << XMM1);
 }
 

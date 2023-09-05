@@ -7,23 +7,30 @@
 int main(void)
 {
 	usart_init(USART_BAUD_RATE_REGISTER);
+	printf("Please work\n");
 	xmem_init();
 	
-	
-    // Set port A pin 0 as output
-    DDRA |= 1 << 0;
+	volatile char* ext_mem = (char*) 0x1800;
+	for(uint8_t i = 0; i < 255; i++)
+	{
+		for(uint8_t j = 0; j < 255; j++)
+		{
+			_delay_loop_2(6);
+			printf("%d\n", i);
+			ext_mem[15] = 0;
+		}
+	}
     
-    while (1) 
+    /*while (1) 
     {
-        // Set port A pin 0 high
 		PORTA |= 1 << 0;
-		xmem_write(14, 255);
-        _delay_loop_2(65530);
+        // Set port A pin 0 high
+        xmem_write(0, 15);
+        _delay_loop_2(65000);
         // Set port A pin 0 low
-        PORTA &= ~(1 << 0);
-        xmem_write(14, 0);
-        _delay_loop_2(65530);
+        xmem_write(0, 0);
+        _delay_loop_2(65000);
 		// printf("Please work");
-    }
+    }*/
 }
 
