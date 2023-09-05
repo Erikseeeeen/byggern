@@ -13,7 +13,6 @@ int main(void)
 {
 	usart_init(USART_BAUD_RATE_REGISTER);
     // Mask out some port C address pins for JTAG (datasheet page 32)
-    // Write 1 to XMM0 register
     SFIOR |= 1 << XMM0;
     SFIOR &= ~(1 << XMM0 | 1 << XMM1);
 	
