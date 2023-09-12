@@ -17,10 +17,6 @@ void usart_init(unsigned int usart_baud_rate_register)
 	
     // Set frame format to 8 data bits, 2 stop bits
     UCSR0C = (1<<URSEL0)|(1<<USBS0)|(3<<UCSZ00); // Universal Synchronous Asynchronous Receiver Transmitter Register C, USART Register Select, USART Stop Bit Select, USART Character Size Select
-
-    // Test printf
-	char* Jorge_height = "187";
-    printf(Jorge_height);
     
 }
 void USART_Transmit(unsigned char data)

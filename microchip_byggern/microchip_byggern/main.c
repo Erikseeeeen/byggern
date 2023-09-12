@@ -3,14 +3,26 @@
 #include "usart.h"
 #include "xmem.h"
 #include "sram_test.h"
+#include "usb_card.h"
+
 
 int main(void)
 {
 	usart_init(USART_BAUD_RATE_REGISTER);
-	printf("Please work\n");
 	xmem_init();
+	usb_card_init();
 	
-	volatile char* ext_mem = (char*) 0x1800;
+	printf("Hello world\n");
+	
+	while(1)
+	{
+		pos_t joystick_pos = joystick_read();
+		printf("Joystick x: %8X y: %8X                                                ", joystick_pos.x, joystick_pos.y);
+	}
+	
+	//SRAM_test();
+	
+	/*volatile char* ext_mem = (char*) 0x1800;
 	for(uint8_t i = 0; i < 255; i++)
 	{
 		for(uint8_t j = 0; j < 255; j++)
@@ -19,7 +31,7 @@ int main(void)
 			printf("%d\n", i);
 			ext_mem[15] = 0;
 		}
-	}
+	}*/
     
     /*while (1) 
     {
