@@ -145,7 +145,7 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="usb_card.h">
+    <Compile Include="adc.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
@@ -163,7 +163,7 @@
     <Compile Include="usart.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="usb_card.c">
+    <Compile Include="adc.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="xmem.c">

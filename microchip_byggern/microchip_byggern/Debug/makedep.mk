@@ -8,7 +8,7 @@ sram_test.c
 
 usart.c
 
-usb_card.c
+adc.c
 
 xmem.c
 

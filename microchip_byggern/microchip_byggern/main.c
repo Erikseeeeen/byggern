@@ -3,21 +3,21 @@
 #include "usart.h"
 #include "xmem.h"
 #include "sram_test.h"
-#include "usb_card.h"
+#include "adc.h"
 
 
 int main(void)
 {
 	usart_init(USART_BAUD_RATE_REGISTER);
 	xmem_init();
-	usb_card_init();
+	adc_init();
 	
 	printf("Hello world\n");
 	
 	while(1)
 	{
 		pos_t joystick_pos = joystick_read();
-		printf("Joystick x: %8X y: %8X                                                ", joystick_pos.x, joystick_pos.y);
+		printf("Joystick x: %8d y: %8d                                                ", joystick_pos.x, joystick_pos.y);
 	}
 	
 	//SRAM_test();
