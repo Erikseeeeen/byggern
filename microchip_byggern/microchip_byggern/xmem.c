@@ -1,9 +1,3 @@
-/*
- * xmem.c
- *
- * Created: 05.09.2023 09:58:32
- *  Author: jorgehav
- */ 
 #include "xmem.h"
 
 // From lab lecture

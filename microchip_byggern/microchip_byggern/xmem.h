@@ -1,11 +1,3 @@
-/*
- * xmem.h
- *
- * Created: 05.09.2023 09:59:05
- *  Author: jorgehav
- */ 
-
-
 #ifndef XMEM_H_
 
 #define XMEM_H_
