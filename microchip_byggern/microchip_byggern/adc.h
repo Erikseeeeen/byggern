@@ -6,13 +6,27 @@
 #define BASE_ADDRESS_ADC 0x1400;
 #include <avr/io.h>
 #include <math.h>
-#include <util/delay_basic.h>
+#include <util/delay.h>
+
+#define MAX(x, y) (((x) > (y)) ? (x) : (y))
+#define MIN(x, y) (((x) < (y)) ? (x) : (y))
+
+
+typedef enum Direction {
+	CENTER,
+	UP,
+	RIGHT,
+	DOWN,
+	LEFT
+}Direction;
 
 typedef struct pos_t
 {
 	uint8_t x;
 	uint8_t y;
+	Direction direction;
 } pos_t;
+
 
 pos_t pos_start;
 
