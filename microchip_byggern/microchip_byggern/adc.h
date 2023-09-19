@@ -20,20 +20,19 @@ typedef enum Direction {
 	LEFT
 }Direction;
 
-typedef struct pos_t
+typedef struct input_t
 {
-	uint8_t x;
-	uint8_t y;
+	uint8_t joystick_x;
+	uint8_t joystick_y;
+	uint8_t slider_1;
+	uint8_t slider_2;
+	uint8_t button_right;
+	uint8_t button_left;
 	Direction direction;
-} pos_t;
-
-
-pos_t pos_start;
+} input_t;
 
 uint8_t adc_init();
-uint8_t joystick_angle_from_voltage(uint8_t voltage);
-pos_t joystick_read();
-uint8_t joystick_calibrate();
+input_t input_read();
 
 
 

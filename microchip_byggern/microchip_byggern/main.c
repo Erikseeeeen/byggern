@@ -16,9 +16,13 @@ int main(void)
 	
 	while(1)
 	{
-		pos_t joystick_pos = joystick_read();
-		//printf("Joystick x: %8d y: %8d                                                ", joystick_pos.x, joystick_pos.y);
-		printf("Joystick x: %8d                                                            ", joystick_pos.direction);
+		
+		input_t input = input_read();
+		//printf("Joystick x: %8d y: %8d                                                ", input.joystick_x, input.joystick_y);
+		printf("Button   l: %8d r: %8d                                                ", input.button_left, input.button_right);
+		//printf("Slider   1: %8d 2: %8d                                                ", input.slider_1, input.slider_2);
+		//volatile char* ext_mem = (char*) 0x1800;
+		//ext_mem[10] = 0;
 	}
 	
 	//SRAM_test();

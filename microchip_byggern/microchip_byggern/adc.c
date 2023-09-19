@@ -16,11 +16,9 @@ uint8_t adc_init()
 	TCCR3B |= (1 << CS30); // No prescaling, datasheet p.132
 	OCR3A = 0;
 	
-	pos_start.x = 0;
-	pos_start.y = 0;
-	
-	_delay_ms(100);
-	joystick_calibrate();
+	// Enable button input
+	DDRD &= ~(1 << PD2);
+	DDRD &= ~(1 << PD3);
 }
 
 uint8_t joystick_angle_from_voltage(uint8_t voltage)
@@ -28,35 +26,20 @@ uint8_t joystick_angle_from_voltage(uint8_t voltage)
 	return voltage;
 }
 
-pos_t joystick_read(){
+input_t input_read(){
 	volatile char* adc_out = (char*) BASE_ADDRESS_ADC;
 	adc_out[0] = 0;
 	
 	// Wait for busy
 	_delay_ms(20);
 	
-	pos_t joystick_pos;
-	float y_raw = *adc_out;
-	float x_raw = *adc_out;
-	float slider1_raw = *adc_out;
-	float slider2_raw = *adc_out;
+	input_t input;
+	uint8_t y_raw = *adc_out;
+	uint8_t x_raw = *adc_out;
+	uint8_t slider1_raw = *adc_out;
+	uint8_t slider2_raw = *adc_out;
 	
-	/*printf("%d\n",y_raw);
-	printf("%d\n",x_raw);
-	printf("%d\n",slider1_raw);
-	printf("%d\n",slider2_raw);*/
-	
-	const double PI =  3.1415926;
-	
-	/*float y_asin = asin((y_raw / (float)(127.5) - 1) * 0.8);
-	float x_asin = asin((x_raw / (float)(127.5) - 1) * 0.8);
-	
-	
-	
-	float y_asin_scaled =  (y_asin + PI / 2) / (2 * PI);
-	float x_asin_scaled =  (x_asin + PI / 2) / (2 * PI);*/
-	
-	
+	const double PI =  3.1415926;	
 	
 	uint8_t y_positive = MAX(y_raw, 175) - 175;
 	uint8_t x_positive = MAX(x_raw, 198) - 198;
@@ -70,28 +53,35 @@ pos_t joystick_read(){
 	uint8_t y_negative_scaled = (uint8_t)((float)y_negative * ((float)127/(float)175));
 	uint8_t x_negative_scaled = (uint8_t)((float)x_negative * ((float)127/(float)198));
 	
-	joystick_pos.y = (uint8_t)((128 - y_negative_scaled) + y_positive_scaled);
-	joystick_pos.x = (uint8_t)((128 - x_negative_scaled) + x_positive_scaled);
+	input.joystick_y = (uint8_t)((128 - y_negative_scaled) + y_positive_scaled);
+	input.joystick_x = (uint8_t)((128 - x_negative_scaled) + x_positive_scaled);
 	
-	joystick_pos.direction = CENTER;
-	if(joystick_pos.y > 198)
-		joystick_pos.direction = UP;
-	if(joystick_pos.x > 198)
-		joystick_pos.direction = RIGHT;
-	if(joystick_pos.y < 68)
-		joystick_pos.direction = DOWN;
-	if(joystick_pos.x < 68)
-		joystick_pos.direction = LEFT;
+	input.direction = CENTER;
+	if(input.joystick_y > 198)
+		input.direction = UP;
+	if(input.joystick_x > 198)
+		input.direction = RIGHT;
+	if(input.joystick_y < 68)
+		input.direction = DOWN;
+	if(input.joystick_x < 68)
+		input.direction = LEFT;
+	
+	input.slider_1 = slider1_raw;
+	input.slider_2 = slider2_raw;
+	
+	input.button_left = PIND & (1 << PD2);
+	input.button_right= PIND & (1 << PD3);
 	
 	
 	_delay_ms(20);
 	
-	return joystick_pos;
+	return input;
 }
 
-uint8_t joystick_calibrate()
-{
-	pos_t joystick_pos = joystick_read();
-	pos_start.x = joystick_pos.x;
-	pos_start.y = joystick_pos.y;
-}
+
+
+
+
+
+
+
