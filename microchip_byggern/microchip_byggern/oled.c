@@ -1,4 +1,5 @@
 #include "oled.h"
+#include <avr/pgmspace.h>
 
 void OLED_init()
 {
@@ -32,7 +33,22 @@ void OLED_init()
 	OLED_write_command(0x10); // Set the upper start column address of pointer by command 10h~1Fh*/
 	
 	OLED_reset();
-	OLED_print_character(1);
+	OLED_pos(0, 0);
+	
+	
+	
+	/*for(int i = 0; i < 30; i++){
+	OLED_print_character(i);
+	
+	}*/
+	/*OLED_write_data(0b00000000);
+	OLED_write_data(0b00000110);
+	OLED_write_data(0b01011111);
+	OLED_write_data(0b01011111);
+	OLED_write_data(0b00000110);
+	OLED_write_data(0b00000000);
+	OLED_write_data(0b00000000);
+	OLED_write_data(0b00000000);*/
 	
 } // PDF:"OLED LY190-128064" section 9.4
 
@@ -77,13 +93,19 @@ void OLED_write_command(char data)
 }
 void OLED_print(char* string)
 {
-	OLED_pos ( 0,0 );
+	int i = 0;
+	while(string[i] != '\0')
+	{
+		OLED_print_character(string[i] - 32);
+		i++;
+	}
 }
+
 void OLED_print_character(char character)
 {
 	for (int row = 0; row < 8; row++)
 	{
-		OLED_write_data(font8[character][row]);
+		OLED_write_data(pgm_read_byte(&(font8[character][row])));
 	}
 }
 void OLED_set_brightness(uint8_t lvl);

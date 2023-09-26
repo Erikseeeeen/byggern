@@ -12,11 +12,20 @@ int main(void)
 	xmem_init();
 	adc_init();
 	OLED_init();
+	menu_init();
 	
-	printf("Hello world\n");
+	printf("hello world\n");
 	
+	
+	
+	int i = 0;
 	while(1)
 	{
+		if(!(i % 1000000))
+		{
+			input_t input = input_read();
+			menu_loop(input);
+		}
 		
 		//input_t input = input_read();
 		//printf("Joystick x: %8d y: %8d                                                ", input.joystick_x, input.joystick_y);

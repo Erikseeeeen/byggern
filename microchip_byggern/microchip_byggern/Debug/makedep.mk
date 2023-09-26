@@ -4,6 +4,8 @@
 
 main.c
 
+menu.c
+
 oled.c
 
 sram_test.c
