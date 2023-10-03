@@ -20,17 +20,12 @@ int main(void)
 	menu_init();
 	mcp2515_init();
 	
-	while (1)
-	{
-		SPI_write(0);
-	}
-	
 	//mcp2515_write('9');
-	mcp2515_write(0, '9');
-	mcp2515_write(0, '9');
-	mcp2515_write(0, '9');
+	mcp2515_write(0x36, '8');
+	mcp2515_write(0x36, '8');
+	mcp2515_write(0x36, '8');
 	
-	uint8_t result = mcp2515_read(0);
+	uint8_t result = mcp2515_read(0x36);
 	printf("   %d ",result);
 	
 	

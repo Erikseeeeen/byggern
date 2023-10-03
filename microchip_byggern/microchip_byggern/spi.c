@@ -8,6 +8,8 @@ void SPI_init(){
 	/* Enable SPI, Master, set clock rate fck/16 */
 	//SPCR |= (1 << SPE) | (1 << MSTR) | (1 << SPR0) | (1 << SPIE) ;
 	SPCR |= (1 << SPE) | (1 << MSTR) | (1 << SPR0) ;
+	SPCR &= ~(1 << SPR1) ;
+	SPSR &= ~(1 << SPI2X) ;
 	
 
 }
