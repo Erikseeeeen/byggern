@@ -4,6 +4,7 @@
 
 #include <stdint.h>
 #include "mcp.h"
+#include "avr/io.h"
 
 typedef struct can_message {
 	uint16_t id ;
@@ -12,7 +13,7 @@ typedef struct can_message {
 } can_message;
 
 void can_init();
-void can_message_send();
+void can_message_send(can_message message);
 can_message can_data_receive();
 void can_int_vect();
 

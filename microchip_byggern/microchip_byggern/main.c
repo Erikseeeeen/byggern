@@ -5,28 +5,34 @@
 #include "sram_test.h"
 #include "adc.h"
 #include "can.h"
+#include "interrupts.h"
 
 
 int main(void)
 {
 	usart_init(USART_BAUD_RATE_REGISTER);
 	printf("hello world ");
-	
-	//SREG |= (1 << 7); // Enable global interrupts
-	
+
 	xmem_init();
 	adc_init();
 	OLED_init();
 	menu_init();
 	mcp2515_init();
+	interrupt_init();
 	
 	//mcp2515_write('9');
-	mcp2515_write(0x36, '8');
+	/*mcp2515_write(0x36, '8');
 	mcp2515_write(0x36, '8');
 	mcp2515_write(0x36, '8');
 	
 	uint8_t result = mcp2515_read(0x36);
-	printf("   %d ",result);
+	printf("   %d ",result);*/
+	
+	can_message msg;
+	msg.id = 0;
+	msg.data_length = 8;
+	msg.data = 'F';
+	can_message_send(msg)
 	
 	
 	

@@ -154,7 +154,13 @@
     <Compile Include="can.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="interrupts.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="fonts.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="interrupts.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
