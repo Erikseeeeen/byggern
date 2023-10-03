@@ -166,6 +166,12 @@
     <Compile Include="oled.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="spi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="spi.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="sram_test.c">
       <SubType>compile</SubType>
     </Compile>
