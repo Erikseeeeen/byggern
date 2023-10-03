@@ -13,7 +13,7 @@ void SPI_init();
 // that uses SPI provide a good description of the bus.
 
 
-void SPI_send(char cData);
+void SPI_write(char cData);
 char SPI_read(); //Remember, to read something from a slave the master must transmit a dummy byte
 
 

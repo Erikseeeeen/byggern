@@ -4,21 +4,34 @@
 #include "xmem.h"
 #include "sram_test.h"
 #include "adc.h"
+#include "can.h"
 
 
 int main(void)
 {
 	usart_init(USART_BAUD_RATE_REGISTER);
+	printf("hello world ");
+	
+	//SREG |= (1 << 7); // Enable global interrupts
+	
 	xmem_init();
 	adc_init();
 	OLED_init();
 	menu_init();
 	mcp2515_init();
 	
-	printf("hello world\n");
+	while (1)
+	{
+		SPI_write(0);
+	}
 	
-	mcp2515_write('9');
-	printf("%d", mcp2515_read());
+	//mcp2515_write('9');
+	mcp2515_write(0, '9');
+	mcp2515_write(0, '9');
+	mcp2515_write(0, '9');
+	
+	uint8_t result = mcp2515_read(0);
+	printf("   %d ",result);
 	
 	
 	

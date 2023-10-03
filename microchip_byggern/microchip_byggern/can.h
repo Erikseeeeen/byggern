@@ -3,6 +3,7 @@
 #define CAN_H_
 
 #include <stdint.h>
+#include "mcp.h"
 
 typedef struct can_message {
 	uint16_t id ;
