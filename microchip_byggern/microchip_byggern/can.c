@@ -31,7 +31,13 @@ void can_message_send(can_message message)
 }
 can_message can_data_receive()
 {
+    can_message message;
 
+    message.id = mcp2515_read(RXBnSIDH) << 8 | mcp2515_read(RXBnSIDL);
+    message.data = mcp2515_read(MCP_RXB0D0);
+    message.data_length = mcp2515_read(MCP_RXB0DLC);
+
+    return message;
 }
 void can_int_vect()
 {
