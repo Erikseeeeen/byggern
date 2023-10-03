@@ -13,8 +13,13 @@ int main(void)
 	adc_init();
 	OLED_init();
 	menu_init();
+	mcp2515_init();
 	
 	printf("hello world\n");
+	
+	mcp2515_write('9');
+	printf("%d", mcp2515_read());
+	
 	
 	
 	

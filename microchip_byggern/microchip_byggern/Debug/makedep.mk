@@ -2,11 +2,17 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+can.c
+
 main.c
+
+mcp.c
 
 menu.c
 
 oled.c
+
+spi.c
 
 sram_test.c
 
