@@ -15,6 +15,7 @@ uint8_t mcp2515_init ()
         printf (" MCP2515 is NOT in configuration mode after reset !\n");
         return 1;
     }
+    mcp2515_bit_modify(TXRTSCTRL, 0b00000001, 0b00000001);
     // More initialization
     return 0;
 }
@@ -37,6 +38,22 @@ void mcp2515_write(uint8_t address, uint8_t data)
     SPI_write (MCP_WRITE);
     SPI_write (address);
     SPI_write (data);
+    
+    PORTB |= (1 << PB4 ); // Deselect CAN - controller
+}
+
+void mcp2515_write_bytes(uint8_t address, uint8_t* data, uint8_t data_length)
+{
+    // MCU selects one of the slaves by setting its corresponding SS signal to low
+    PORTB &= ~(1 << PB4 ); // Select CAN - controller
+    
+    SPI_write (MCP_WRITE);
+    SPI_write (address);
+    for(int i = 0; i < data_length; i++)
+    {
+        SPI_write (data[i]);
+    }
+    
     PORTB |= (1 << PB4 ); // Deselect CAN - controller
 }
 

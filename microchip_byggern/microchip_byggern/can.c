@@ -20,8 +20,14 @@ void can_message_send(can_message message)
     // • Sending the SPI RTS command
     mcp2515_request_to_send();
     // • Setting the TXnRTS pin low for the particular transmit buffer(s) that are to be transmitted
+    // If configured to operate as a request-to-send pin, the pin is mapped into the respective TXBnCTRL.TXREQ bit for the transmit buffer
     
-	//MCP_WRITE(0x36, );
+    mcp2515_write(TXB0SIDH, message.id >> 8);
+    mcp2515_write(TXBnSIDL, message.id);
+    mcp2515_write(TXBnDLC, message.data_length);
+    
+
+	mcp2515_write_bytes(TXB0D0, message.data, message.data_length);
 }
 can_message can_data_receive()
 {
