@@ -31,6 +31,14 @@ void mcp2515_write(uint8_t data)
 {
     // MCU selects one of the slaves by setting its corresponding SS signal to low
     PORTB &= ~(1 << CAN_CS ); // Select CAN - controller
+    // In order to initiate message transmission, the
+    // TXBnCTRL.TXREQ bit must be set for each buffer to
+    // be transmitted. This can be accomplished by:
+    // • Writing to the register via the SPI write command
+    // • Sending the SPI RTS command
+    // • Setting the TXnRTS pin low for the particular
+    // transmit buffer(s) that are to be transmitted
+    
     SPI_write (data); 
     PORTB |= (1 << CAN_CS ); // Deselect CAN - controller
 }
@@ -45,9 +53,12 @@ void mcp2515_bit_modify()
 void mcp2515_reset()
 {
     SPI_write(MCP_RESET);
+    SPI_write(MCP_CANCTRL);
+    SPI_write(MODE_CONFIG);
 }
-void mcp2515_read_status()
+uint8_t mcp2515_read_status()
 {
     SPI_write ( MCP_READ_STATUS ); // Send address
     result = SPI_read () ; // Read result
+    return result;
 }

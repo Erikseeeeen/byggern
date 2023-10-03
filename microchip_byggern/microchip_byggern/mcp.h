@@ -167,7 +167,7 @@ void mcp2515_write();
 void mcp2515_request_to_send();
 void mcp2515_bit_modify();
 void mcp2515_reset();
-void mcp2515_read_status();
+uint8_t mcp2515_read_status();
 
 
 

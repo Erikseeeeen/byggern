@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "mcp.h": "c"
+        "mcp.h": "c",
+        "stdint.h": "c"
     }
 }
