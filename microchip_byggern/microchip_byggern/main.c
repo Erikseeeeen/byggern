@@ -36,8 +36,11 @@ int main(void)
 		msg.data_length = 8;
 		msg.data[0] = 'G';
 		can_message_send(msg);
-		printf("%d", can_data_receive().data[0]);
+		
+		_delay_ms(1000);
+		//printf("%d", can_data_receive().data[0]);
 	}
+	
 
 	
 	

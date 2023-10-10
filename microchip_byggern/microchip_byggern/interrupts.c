@@ -16,4 +16,7 @@ interrupt_init(){
 
 }
 
-ISR(INT2_vect){printf("%d", can_data_receive().data[0]);}
+ISR(INT2_vect){
+	printf("%d", can_data_receive().data[0]);
+    mcp2515_bit_modify(MCP_CANINTF, 0b00000001, 0b00000000);
+}

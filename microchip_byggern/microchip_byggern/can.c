@@ -5,7 +5,11 @@ void can_init()
     // Set to loopback mode
     mcp2515_init();
 	
-	mcp2515_bit_modify(MCP_CANCTRL, MODE_MASK, MODE_LOOPBACK);
+	mcp2515_bit_modify(MCP_CANCTRL, MODE_MASK, MODE_NORMAL);
+	
+	//TODO: Make some acknowledge action happen, or something like this. Node 2 cant send to node 1
+	
+	
 }
 void can_message_send(can_message message)
 {
