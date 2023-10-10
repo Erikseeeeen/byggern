@@ -15,7 +15,7 @@ uint8_t mcp2515_init ()
         printf (" MCP2515 is NOT in configuration mode after reset !\n");
         return 1;
     }
-    mcp2515_bit_modify(TXRTSCTRL, 0b00000001, 0b00000001);
+    mcp2515_bit_modify(MCP_TXRTSCTRL, 0b00000001, 0b00000001);
     // More initialization
     return 0;
 }

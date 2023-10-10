@@ -22,19 +22,19 @@ void can_message_send(can_message message)
     // • Setting the TXnRTS pin low for the particular transmit buffer(s) that are to be transmitted
     // If configured to operate as a request-to-send pin, the pin is mapped into the respective TXBnCTRL.TXREQ bit for the transmit buffer
     
-    mcp2515_write(TXB0SIDH, message.id >> 8);
-    mcp2515_write(TXBnSIDL, message.id);
-    mcp2515_write(TXBnDLC, message.data_length);
+    mcp2515_write(MCP_TXB0SIDH, message.id >> 8);
+    mcp2515_write(MCP_TXB0SIDL, message.id);
+    mcp2515_write(MCP_TXB0DLC, message.data_length);
     
 
-	mcp2515_write_bytes(TXB0D0, message.data, message.data_length);
+	mcp2515_write_bytes(MCP_TXB0D0, message.data, message.data_length);
 }
 can_message can_data_receive()
 {
     can_message message;
 
-    message.id = mcp2515_read(RXBnSIDH) << 8 | mcp2515_read(RXBnSIDL);
-    message.data = mcp2515_read(MCP_RXB0D0);
+    message.id = mcp2515_read(MCP_RXB0SIDH) << 8 | mcp2515_read(MCP_RXB0SIDL);
+    message.data[0] = mcp2515_read(MCP_RXB0D0);
     message.data_length = mcp2515_read(MCP_RXB0DLC);
 
     return message;

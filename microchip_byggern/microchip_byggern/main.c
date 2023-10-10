@@ -17,8 +17,10 @@ int main(void)
 	adc_init();
 	OLED_init();
 	menu_init();
-	mcp2515_init();
 	interrupt_init();
+	can_init();
+	// mcp2515_init();
+	//SPI_init();
 	
 	//mcp2515_write('9');
 	/*mcp2515_write(0x36, '8');
@@ -28,11 +30,16 @@ int main(void)
 	uint8_t result = mcp2515_read(0x36);
 	printf("   %d ",result);*/
 	
-	can_message msg;
-	msg.id = 0;
-	msg.data_length = 8;
-	msg.data = 'F';
-	can_message_send(msg)
+	while(1){
+		can_message msg;
+		msg.id = 0;
+		msg.data_length = 8;
+		msg.data[0] = 'G';
+		can_message_send(msg);
+		printf("%d", can_data_receive().data[0]);
+	}
+
+	
 	
 	
 	

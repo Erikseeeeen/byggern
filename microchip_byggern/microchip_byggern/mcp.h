@@ -173,6 +173,19 @@ uint8_t mcp2515_read_status();
 
 
 
+#define MCP_TXB0SIDH	0x31
+#define MCP_TXB0SIDL	0x32
+#define MCP_TXB0DLC		0x35
+#define MCP_TXB0D0		0x36
+#define MCP_RXB0SIDL	0x62
+#define MCP_RXB0DLC		0x65
+#define MCP_RXB0D0		0x66
+
+#define MCP_TXRTSCTRL	0x0d
+
+
+
+
 
 
 #endif /* MCP_H_ */
