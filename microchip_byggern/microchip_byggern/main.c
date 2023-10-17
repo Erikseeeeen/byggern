@@ -30,14 +30,27 @@ int main(void)
 	uint8_t result = mcp2515_read(0x36);
 	printf("   %d ",result);*/
 	
+	int j = 0;
 	while(1){
 		can_message msg;
 		msg.id = 0;
 		msg.data_length = 8;
-		msg.data[0] = 'G';
+		j = (j+1) % 10;
+		msg.data[0] = 'A' + j;
 		msg.data[1] = '9';
 		msg.data[2] = 'A';
 		can_message_send(msg);
+		printf("    sending mcp msg");
+		
+		//mcp2515_write(MCP_TXB0D0, msg.data[0]);
+		/*_delay_ms(500);
+		printf("   mcp data ");
+		for (int i = 0; i < 8; i++)
+		{
+			printf("%d ", mcp2515_read(MCP_TXB0D0+i));
+		}*/
+		
+		
 		
 		_delay_ms(5000);
 		//printf("%d", can_data_receive().data[0]);

@@ -18,6 +18,9 @@ interrupt_init(){
 
 ISR(INT2_vect){
 	printf("received message");
-	printf("%d", can_data_receive().data[0]);
+	printf("%d ", can_data_receive().data[0]);
+	printf("%d ", can_data_receive().data[1]);
+	printf("%d ", can_data_receive().data[2]);
+	printf("%d ", can_data_receive().data[3]);
     mcp2515_bit_modify(MCP_CANINTF, 0b00000001, 0b00000000);
 }

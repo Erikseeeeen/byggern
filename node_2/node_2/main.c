@@ -48,7 +48,7 @@ int main(void)
 		CAN_MESSAGE msg;
 		msg.data_length = 8;
 		msg.id = 3;
-		msg.data[0] = 'I';
+		msg.data[0] = 'J';
 	    can_send(&msg, 0);
 		
 		printf("sent message %d", msg.data[0]);

@@ -3,15 +3,15 @@ node_2.elf:     file format elf32-littlearm
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000c24  00080000  00080000  00010000  2**2
+  0 .text         00000c30  00080000  00080000  00010000  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .relocate     00000434  20000000  00080c24  00020000  2**3
+  1 .relocate     00000434  20000000  00080c30  00020000  2**3
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          00000084  20000434  00081058  00020434  2**2
+  2 .bss          00000084  20000434  00081064  00020434  2**2
                   ALLOC
-  3 .stack        00000400  200004b8  000810dc  00020434  2**0
+  3 .stack        00000400  200004b8  000810e8  00020434  2**0
                   ALLOC
-  4 .heap         00000200  200008b8  000814dc  00020434  2**0
+  4 .heap         00000200  200008b8  000814e8  00020434  2**0
                   ALLOC
   5 .ARM.attributes 00000029  00000000  00000000  00020434  2**0
                   CONTENTS, READONLY
@@ -70,7 +70,7 @@ Disassembly of section .text:
    8010a:	bd10      	pop	{r4, pc}
    8010c:	20000434 	.word	0x20000434
    80110:	00000000 	.word	0x00000000
-   80114:	00080c24 	.word	0x00080c24
+   80114:	00080c30 	.word	0x00080c30
 
 00080118 <frame_dummy>:
    80118:	4b0c      	ldr	r3, [pc, #48]	; (8014c <frame_dummy+0x34>)
@@ -98,9 +98,9 @@ Disassembly of section .text:
    80148:	4718      	bx	r3
    8014a:	bf00      	nop
    8014c:	00000000 	.word	0x00000000
-   80150:	00080c24 	.word	0x00080c24
+   80150:	00080c30 	.word	0x00080c30
    80154:	20000438 	.word	0x20000438
-   80158:	00080c24 	.word	0x00080c24
+   80158:	00080c30 	.word	0x00080c30
    8015c:	00000000 	.word	0x00000000
 
 00080160 <can_init>:
@@ -687,7 +687,7 @@ void Dummy_Handler(void)
    80498:	e7fe      	b.n	80498 <Reset_Handler+0x44>
    8049a:	bf00      	nop
    8049c:	20000000 	.word	0x20000000
-   804a0:	00080c24 	.word	0x00080c24
+   804a0:	00080c30 	.word	0x00080c30
    804a4:	20000434 	.word	0x20000434
    804a8:	20000434 	.word	0x20000434
    804ac:	200004b8 	.word	0x200004b8
@@ -894,8 +894,8 @@ int main(void)
 		msg.id = 3;
    805cc:	2303      	movs	r3, #3
    805ce:	f8ad 3004 	strh.w	r3, [sp, #4]
-		msg.data[0] = 'I';
-   805d2:	2349      	movs	r3, #73	; 0x49
+		msg.data[0] = 'J';
+   805d2:	234a      	movs	r3, #74	; 0x4a
    805d4:	f88d 3007 	strb.w	r3, [sp, #7]
 	    can_send(&msg, 0);
    805d8:	2100      	movs	r1, #0
@@ -903,7 +903,7 @@ int main(void)
    805dc:	4b0d      	ldr	r3, [pc, #52]	; (80614 <main+0xb0>)
    805de:	4798      	blx	r3
 		
-		printf("%d", msg.data[0]);
+		printf("sent message %d", msg.data[0]);
    805e0:	f89d 1007 	ldrb.w	r1, [sp, #7]
    805e4:	480c      	ldr	r0, [pc, #48]	; (80618 <main+0xb4>)
    805e6:	4b08      	ldr	r3, [pc, #32]	; (80608 <main+0xa4>)
@@ -1416,7 +1416,7 @@ static int print( char **out, const char *format, va_list args )
    80898:	bdf0      	pop	{r4, r5, r6, r7, pc}
    8089a:	bf00      	nop
    8089c:	0008062d 	.word	0x0008062d
-   808a0:	00080bd4 	.word	0x00080bd4
+   808a0:	00080be0 	.word	0x00080be0
    808a4:	000806b1 	.word	0x000806b1
    808a8:	0008061d 	.word	0x0008061d
 
@@ -1636,7 +1636,7 @@ void UART_Handler(void)
    809b2:	bf00      	nop
    809b4:	400e0800 	.word	0x400e0800
    809b8:	20000450 	.word	0x20000450
-   809bc:	00080bdc 	.word	0x00080bdc
+   809bc:	00080be8 	.word	0x00080be8
    809c0:	000808ad 	.word	0x000808ad
 
 000809c4 <__libc_init_array>:
@@ -1655,7 +1655,7 @@ void UART_Handler(void)
    809de:	d1f9      	bne.n	809d4 <__libc_init_array+0x10>
    809e0:	4e0a      	ldr	r6, [pc, #40]	; (80a0c <__libc_init_array+0x48>)
    809e2:	4d0b      	ldr	r5, [pc, #44]	; (80a10 <__libc_init_array+0x4c>)
-   809e4:	f000 f90c 	bl	80c00 <_init>
+   809e4:	f000 f912 	bl	80c0c <_init>
    809e8:	1b76      	subs	r6, r6, r5
    809ea:	10b6      	asrs	r6, r6, #2
    809ec:	bf18      	it	ne
@@ -1669,10 +1669,10 @@ void UART_Handler(void)
    809fe:	bd70      	pop	{r4, r5, r6, pc}
    80a00:	bd70      	pop	{r4, r5, r6, pc}
    80a02:	bf00      	nop
-   80a04:	00080c0c 	.word	0x00080c0c
-   80a08:	00080c0c 	.word	0x00080c0c
-   80a0c:	00080c14 	.word	0x00080c14
-   80a10:	00080c0c 	.word	0x00080c0c
+   80a04:	00080c18 	.word	0x00080c18
+   80a08:	00080c18 	.word	0x00080c18
+   80a0c:	00080c20 	.word	0x00080c20
+   80a10:	00080c18 	.word	0x00080c18
 
 00080a14 <register_fini>:
    80a14:	4b02      	ldr	r3, [pc, #8]	; (80a20 <register_fini+0xc>)
@@ -1706,10 +1706,10 @@ void UART_Handler(void)
    80a52:	2c00      	cmp	r4, #0
    80a54:	d1f9      	bne.n	80a4a <__libc_fini_array+0x16>
    80a56:	e8bd 4038 	ldmia.w	sp!, {r3, r4, r5, lr}
-   80a5a:	f000 b8db 	b.w	80c14 <_fini>
+   80a5a:	f000 b8e1 	b.w	80c20 <_fini>
    80a5e:	bf00      	nop
-   80a60:	00080c24 	.word	0x00080c24
-   80a64:	00080c20 	.word	0x00080c20
+   80a60:	00080c30 	.word	0x00080c30
+   80a64:	00080c2c 	.word	0x00080c2c
 
 00080a68 <__retarget_lock_acquire_recursive>:
    80a68:	4770      	bx	lr
@@ -1786,7 +1786,7 @@ void UART_Handler(void)
    80b22:	e8bd 83f8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, r8, r9, pc}
    80b26:	bf00      	nop
    80b28:	20000430 	.word	0x20000430
-   80b2c:	00080bfc 	.word	0x00080bfc
+   80b2c:	00080c08 	.word	0x00080c08
    80b30:	00000000 	.word	0x00000000
    80b34:	304e4143 	.word	0x304e4143
    80b38:	746e6920 	.word	0x746e6920
@@ -1827,42 +1827,45 @@ void UART_Handler(void)
    80bc4:	6c6c6548 	.word	0x6c6c6548
    80bc8:	6f77206f 	.word	0x6f77206f
    80bcc:	00646c72 	.word	0x00646c72
-   80bd0:	00006425 	.word	0x00006425
-   80bd4:	6c756e28 	.word	0x6c756e28
-   80bd8:	0000296c 	.word	0x0000296c
-   80bdc:	3a525245 	.word	0x3a525245
-   80be0:	52415520 	.word	0x52415520
-   80be4:	58522054 	.word	0x58522054
-   80be8:	66756220 	.word	0x66756220
-   80bec:	20726566 	.word	0x20726566
-   80bf0:	66207369 	.word	0x66207369
-   80bf4:	0a6c6c75 	.word	0x0a6c6c75
-   80bf8:	0000000d 	.word	0x0000000d
+   80bd0:	746e6573 	.word	0x746e6573
+   80bd4:	73656d20 	.word	0x73656d20
+   80bd8:	65676173 	.word	0x65676173
+   80bdc:	00642520 	.word	0x00642520
+   80be0:	6c756e28 	.word	0x6c756e28
+   80be4:	0000296c 	.word	0x0000296c
+   80be8:	3a525245 	.word	0x3a525245
+   80bec:	52415520 	.word	0x52415520
+   80bf0:	58522054 	.word	0x58522054
+   80bf4:	66756220 	.word	0x66756220
+   80bf8:	20726566 	.word	0x20726566
+   80bfc:	66207369 	.word	0x66207369
+   80c00:	0a6c6c75 	.word	0x0a6c6c75
+   80c04:	0000000d 	.word	0x0000000d
 
-00080bfc <_global_impure_ptr>:
-   80bfc:	20000008                                ... 
+00080c08 <_global_impure_ptr>:
+   80c08:	20000008                                ... 
 
-00080c00 <_init>:
-   80c00:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-   80c02:	bf00      	nop
-   80c04:	bcf8      	pop	{r3, r4, r5, r6, r7}
-   80c06:	bc08      	pop	{r3}
-   80c08:	469e      	mov	lr, r3
-   80c0a:	4770      	bx	lr
+00080c0c <_init>:
+   80c0c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+   80c0e:	bf00      	nop
+   80c10:	bcf8      	pop	{r3, r4, r5, r6, r7}
+   80c12:	bc08      	pop	{r3}
+   80c14:	469e      	mov	lr, r3
+   80c16:	4770      	bx	lr
 
-00080c0c <__init_array_start>:
-   80c0c:	00080a15 	.word	0x00080a15
+00080c18 <__init_array_start>:
+   80c18:	00080a15 	.word	0x00080a15
 
-00080c10 <__frame_dummy_init_array_entry>:
-   80c10:	00080119                                ....
+00080c1c <__frame_dummy_init_array_entry>:
+   80c1c:	00080119                                ....
 
-00080c14 <_fini>:
-   80c14:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-   80c16:	bf00      	nop
-   80c18:	bcf8      	pop	{r3, r4, r5, r6, r7}
-   80c1a:	bc08      	pop	{r3}
-   80c1c:	469e      	mov	lr, r3
-   80c1e:	4770      	bx	lr
+00080c20 <_fini>:
+   80c20:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+   80c22:	bf00      	nop
+   80c24:	bcf8      	pop	{r3, r4, r5, r6, r7}
+   80c26:	bc08      	pop	{r3}
+   80c28:	469e      	mov	lr, r3
+   80c2a:	4770      	bx	lr
 
-00080c20 <__fini_array_start>:
-   80c20:	000800f5 	.word	0x000800f5
+00080c2c <__fini_array_start>:
+   80c2c:	000800f5 	.word	0x000800f5
