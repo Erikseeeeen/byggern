@@ -36,10 +36,12 @@ int main(void)
 	
 	printf("Hello world");
 	
+	
 
     /* Replace with your application code */
     while (1)
     {
+		WDT->WDT_CR = WDT_CR_KEY_PASSWD | WDT_CR_WDRSTT;
 	    PIOA->PIO_SODR |= PIO_PA20;
 	    delay_ms(100000);
 	    PIOA->PIO_CODR |= PIO_PA20;
@@ -50,7 +52,5 @@ int main(void)
 		msg.id = 3;
 		msg.data[0] = 'J';
 	    can_send(&msg, 0);
-		
-		printf("sent message %d", msg.data[0]);
     }
 }
