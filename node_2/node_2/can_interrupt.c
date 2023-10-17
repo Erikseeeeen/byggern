@@ -17,6 +17,8 @@
 
 #include "can_controller.h"
 
+#include "pwm.h"
+
 #define DEBUG_INTERRUPT 0
 
 /**
@@ -49,6 +51,10 @@ void CAN0_Handler( void )
 		{
 			printf("CAN0 message arrived in non-used mailbox\n\r");
 		}
+		
+		joystick_x = message.data[0];
+		joystick_y = message.data[1];
+		set_servo_duty();
 
 		if(DEBUG_INTERRUPT)printf("message id: %d\n\r", message.id);
 		if(DEBUG_INTERRUPT)printf("message data length: %d\n\r", message.data_length);

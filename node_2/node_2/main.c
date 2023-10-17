@@ -12,6 +12,7 @@
 #include "can_interrupt.h"
 #include "printf-stdarg.h"
 #include "uart.h"
+#include "pwm.h"
 
 
 int main(void)
@@ -21,6 +22,7 @@ int main(void)
 	
 	can_init_def_tx_rx_mb(0x00290165);
 	configure_uart();
+	pwm_init();
 	
 	
 	// Enable the peripheral clock for the PIO (Peripheral Input/Output) controller
@@ -47,10 +49,11 @@ int main(void)
 	    PIOA->PIO_CODR |= PIO_PA20;
 	    delay_ms(100000);
 		
-		CAN_MESSAGE msg;
+		
+		/*CAN_MESSAGE msg;
 		msg.data_length = 8;
 		msg.id = 3;
 		msg.data[0] = 'J';
-	    can_send(&msg, 0);
+	    can_send(&msg, 0);*/
     }
 }
