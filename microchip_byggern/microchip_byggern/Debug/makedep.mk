@@ -6,6 +6,8 @@ can.c
 
 interrupts.c
 
+joystick_transceiver.c
+
 main.c
 
 mcp.c

@@ -7,7 +7,7 @@ void menu_init()
 	OLED_pos(0, 0);
 	OLED_reset();
 }
-void menu_loop(input_t input)
+void menu_input_loop(input_t input)
 {
 	if(input.direction == UP && last_input.direction != UP)
 	{
@@ -24,19 +24,18 @@ void menu_loop(input_t input)
 	{
 		current_menu = menu_info[current_menu].select_jump[selected_position];
 	}
-	menu_draw(input);
 	
 	/*printf("Joystick x: %8d y: %8d                                                ", input.joystick_x, input.joystick_y);
 	printf("Button   l: %8d r: %8d                                                ", input.button_left, input.button_right);
 	printf("Slider   1: %8d 2: %8d                                                ", input.slider_1, input.slider_2);*/
 	last_input = input;
 }
-void menu_draw(input_t input)
+void menu_draw_loop(input_t input)
 {
-	if(input.direction != last_input.direction || input.button_left != last_input.button_left)
-	{
-		OLED_reset();
-	}
+	//if(input.direction != last_input.direction || input.button_left != last_input.button_left)
+	//{
+	OLED_reset();
+	//}
 	
 	for(int row = 0; row < 3; row++)
 	{

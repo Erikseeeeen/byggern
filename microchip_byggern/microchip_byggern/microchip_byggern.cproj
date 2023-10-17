@@ -163,6 +163,12 @@
     <Compile Include="interrupts.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="joystick_transceiver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="joystick_transceiver.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
