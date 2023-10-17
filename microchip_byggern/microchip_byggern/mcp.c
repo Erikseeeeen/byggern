@@ -25,9 +25,9 @@ uint8_t mcp2515_init ()
 	mcp2515_bit_modify(MCP_CNF2, 0b11111111, 0b10110001); // Phase 1 length = 7*T_Q, Propagation Segment = 2*T_Q, BUs Line sampled once and Length of Phase 2 determined by CNF3
 	mcp2515_bit_modify(MCP_CNF3, 0b00000111, 0b00000101); // Phase 2 length = 6*T_Q
 	
-	printf("%02x ", mcp2515_read(MCP_CNF1));
-	printf("%02x ", mcp2515_read(MCP_CNF2));
-	printf("%02x ", mcp2515_read(MCP_CNF3));
+	//printf("%02x ", mcp2515_read(MCP_CNF1));
+	//printf("%02x ", mcp2515_read(MCP_CNF2));
+	//printf("%02x ", mcp2515_read(MCP_CNF3));
 	
     
     // More initialization
@@ -65,6 +65,7 @@ void mcp2515_write_bytes(uint8_t address, uint8_t* data, uint8_t data_length)
     SPI_write (address);
     for(int i = 0; i < data_length; i++)
     {
+		//printf("writing data %d\n", data[i]);
         SPI_write (data[i]);
     }
     

@@ -51,6 +51,6 @@ int main(void)
 		msg.data[0] = 'I';
 	    can_send(&msg, 0);
 		
-		printf("%d", msg.data[0]);
+		printf("sent message %d", msg.data[0]);
     }
 }
