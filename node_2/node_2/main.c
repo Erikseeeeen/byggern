@@ -31,9 +31,7 @@ int main(void)
 	
 	PIOA->PIO_PER |= PIO_PA20; // Enable PIO control
 	PIOA->PIO_OER |= PIO_PA20; // Set pin as output
-	
 	PIOA->PIO_SODR |= PIO_PA20; // Set output high
-	
 	PIOA->PIO_CODR |= PIO_PA20;
 	
 	printf("Hello world");
