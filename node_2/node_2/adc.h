@@ -13,6 +13,7 @@
 
 
 void adc_init();
+int adc_receive();
 
 
 #endif /* ADC_H_ */

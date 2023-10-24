@@ -13,6 +13,7 @@
 #include "printf-stdarg.h"
 #include "uart.h"
 #include "pwm.h"
+#include "adc.h"
 
 
 int main(void)
@@ -23,6 +24,7 @@ int main(void)
 	can_init_def_tx_rx_mb(0x00290165);
 	configure_uart();
 	pwm_init();
+	adc_init();
 	
 	
 	// Enable the peripheral clock for the PIO (Peripheral Input/Output) controller
@@ -53,5 +55,7 @@ int main(void)
 		msg.id = 3;
 		msg.data[0] = 'J';
 	    can_send(&msg, 0);*/
+		
+		printf("%d  ", ADC->ADC_CDR10);
     }
 }
