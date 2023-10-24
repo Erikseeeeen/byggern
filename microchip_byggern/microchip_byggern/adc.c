@@ -19,6 +19,7 @@ uint8_t adc_init()
 	// Enable button input
 	DDRD &= ~(1 << PD2);
 	DDRD &= ~(1 << PD3);
+	input_head = 0;
 }
 
 uint8_t joystick_angle_from_voltage(uint8_t voltage)
@@ -31,7 +32,7 @@ input_t input_read(){
 	adc_out[0] = 0;
 	
 	// Wait for busy
-	_delay_ms(20);
+	_delay_ms(2);
 	
 	input_t input;
 	uint8_t y_raw = *adc_out;
@@ -72,9 +73,6 @@ input_t input_read(){
 	input.button_left = PIND & (1 << PD2);
 	input.button_right= PIND & (1 << PD3);
 	
-	
-	_delay_ms(20);
-
 	input_buffer[input_head] = input;
 	input_head = (input_head + 1) % 10;
 	
@@ -82,13 +80,16 @@ input_t input_read(){
 	input_t smooth_input = input;
 	float smooth_joystick_x = 0;
 	float smooth_joystick_y = 0;
-	for(int i = input_head; i != input_head - 1; i = (i + 1) % 10)
+	for(int i = input_head; i != (input_head - 1 + 10) % 10; i = (i + 1) % 10)
 	{
+		printf("||| %d    %d |||", i, (input_head - 1 + 10) % 10);
 		smooth_joystick_x += (float)input_buffer[i % 10].joystick_x / 10.0;
 		smooth_joystick_y += (float)input_buffer[i % 10].joystick_y / 10.0;
 	}
 	smooth_input.joystick_x = (int)smooth_joystick_x;
 	smooth_input.joystick_y = (int)smooth_joystick_y;
+
+	printf("%d    ", smooth_joystick_x);
 
 
 	return smooth_input;

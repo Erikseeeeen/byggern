@@ -32,7 +32,7 @@ typedef struct input_t
 } input_t;
 
 input_t input_buffer[10];
-int input_head = 0;
+int input_head;
 
 uint8_t adc_init();
 input_t input_read();
