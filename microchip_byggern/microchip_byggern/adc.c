@@ -80,15 +80,17 @@ input_t input_read(){
 	input_t smooth_input = input;
 	float smooth_joystick_x = 0;
 	float smooth_joystick_y = 0;
-	for(int i = input_head; i != (input_head + 1 + 10) % 10; i = (i - 1) % 10)
+	for(int i = input_head; i != (input_head - 1 + 10) % 10; i = (i + 1) % 10)
 	{
-		age = (input_head - i + 10) % 10 + 1;
-		smooth_joystick_x += pow(1/2, age) * (float)input_buffer[i % 10].joystick_x / 10.0;
+		int age = (input_head - i + 10) % 10 + 1;
+		//printf("%d   ", (int)(pow(0.5, (float)age) * (float)input_buffer[i % 10].joystick_x * 100.0));
+		smooth_joystick_x += pow(0.5, (float)age) * (float)input_buffer[i % 10].joystick_x;
 		smooth_joystick_y += (float)input_buffer[i % 10].joystick_y / 10.0;
 	}
 	smooth_input.joystick_x = (int)smooth_joystick_x;
 	smooth_input.joystick_y = (int)smooth_joystick_y;
 	
+	printf("%d   ", (int)(smooth_joystick_x));
 
 	return smooth_input;
 }
