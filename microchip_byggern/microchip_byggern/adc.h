@@ -4,6 +4,7 @@
 
 #define FREQUENCY_OF_OSCILLATOR 4915200
 #define BASE_ADDRESS_ADC 0x1400;
+#define INPUT_BUFFER_SIZE 100
 #include <avr/io.h>
 #include <math.h>
 #include <util/delay.h>
@@ -31,7 +32,7 @@ typedef struct input_t
 	Direction direction;
 } input_t;
 
-input_t input_buffer[10];
+input_t input_buffer[INPUT_BUFFER_SIZE];
 int input_head;
 
 uint8_t adc_init();

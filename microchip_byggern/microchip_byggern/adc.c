@@ -32,7 +32,7 @@ input_t input_read(){
 	adc_out[0] = 0;
 	
 	// Wait for busy
-	_delay_ms(2);
+	//_delay_ms(2);
 	
 	input_t input;
 	uint8_t y_raw = *adc_out;
@@ -74,17 +74,17 @@ input_t input_read(){
 	input.button_right= PIND & (1 << PD3);
 	
 	input_buffer[input_head] = input;
-	input_head = (input_head + 1) % 10;
+	input_head = (input_head + 1) % INPUT_BUFFER_SIZE;
 	
-	// smooth_input is average of all 10 last inputs
+	// smooth_input is average of all INPUT_BUFFER_SIZE last inputs
 	input_t smooth_input = input;
 	float smooth_joystick_x = 0;
 	float smooth_joystick_y = 0;
-	for(int i = input_head; i != (input_head + 1 + 10) % 10; i = (i - 1) % 10)
+	for(int i = input_head; i != (input_head + 1 + INPUT_BUFFER_SIZE) % INPUT_BUFFER_SIZE; i = (i - 1) % INPUT_BUFFER_SIZE)
 	{
-		age = (input_head - i + 10) % 10 + 1;
-		smooth_joystick_x += pow(1/2, age) * (float)input_buffer[i % 10].joystick_x / 10.0;
-		smooth_joystick_y += (float)input_buffer[i % 10].joystick_y / 10.0;
+		age = (input_head - i + INPUT_BUFFER_SIZE) % INPUT_BUFFER_SIZE + 1;
+		smooth_joystick_x += pow(1/2, age) * (float)input_buffer[i % INPUT_BUFFER_SIZE].joystick_x;
+		smooth_joystick_y += (float)input_buffer[i % INPUT_BUFFER_SIZE].joystick_y / INPUT_BUFFER_SIZE;
 	}
 	smooth_input.joystick_x = (int)smooth_joystick_x;
 	smooth_input.joystick_y = (int)smooth_joystick_y;

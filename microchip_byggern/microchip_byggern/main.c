@@ -23,12 +23,12 @@ int main(void)
 	while(1)
 	{
 		input_t input;
-		for(int i = 0; i < 10; i++)
+		for(int i = 0; i < 250; i++)
 		{
 			input = input_read();
-			_delay_ms(25);
 			joystick_loop(input);
 			menu_input_loop(input);
+			_delay_ms(1);
 		}
 		menu_draw_loop(input);
 	}
