@@ -7,7 +7,6 @@
 #include "can.h"
 #include "interrupts.h"
 
-
 int main(void)
 {
 	usart_init(USART_BAUD_RATE_REGISTER);

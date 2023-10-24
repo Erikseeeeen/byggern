@@ -31,6 +31,9 @@ typedef struct input_t
 	Direction direction;
 } input_t;
 
+input_t input_buffer[10];
+int input_head = 0;
+
 uint8_t adc_init();
 input_t input_read();
 

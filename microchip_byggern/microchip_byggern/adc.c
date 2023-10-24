@@ -74,14 +74,22 @@ input_t input_read(){
 	
 	
 	_delay_ms(20);
+
+	input_buffer[input_head] = input;
+	input_head = (input_head + 1) % 10;
 	
-	return input;
+	// smooth_input is average of all 10 last inputs
+	input_t smooth_input = input;
+	float smooth_joystick_x = 0;
+	float smooth_joystick_y = 0;
+	for(int i = input_head; i != input_head - 1; i = (i + 1) % 10)
+	{
+		smooth_joystick_x += (float)input_buffer[i % 10].joystick_x / 10.0;
+		smooth_joystick_y += (float)input_buffer[i % 10].joystick_y / 10.0;
+	}
+	smooth_input.joystick_x = (int)smooth_joystick_x;
+	smooth_input.joystick_y = (int)smooth_joystick_y;
+
+
+	return smooth_input;
 }
-
-
-
-
-
-
-
-
