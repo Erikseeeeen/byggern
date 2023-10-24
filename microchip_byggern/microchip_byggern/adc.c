@@ -32,7 +32,7 @@ input_t input_read(){
 	adc_out[0] = 0;
 	
 	// Wait for busy
-	_delay_ms(2);
+	//_delay_ms(2);
 	
 	input_t input;
 	uint8_t y_raw = *adc_out;
