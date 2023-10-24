@@ -10,7 +10,7 @@ void pwm_init()
 	PIOC->PIO_ABSR |= PIO_ABSR_P19;
 	
 	// Enable peripheral clock
-	PMC->PMC_PCR = (ID_PWM << PMC_PCR_PID_Pos) | PMC_PCR_DIV_PERIPH_DIV_MCK | PMC_PCR_EN;
+	PMC->PMC_PCR |= (ID_PWM << PMC_PCR_PID_Pos) | PMC_PCR_DIV_PERIPH_DIV_MCK | PMC_PCR_EN;
 	PMC->PMC_PCER1 |= (1 << (ID_PWM-32));
 	
 	// Disable write protection
