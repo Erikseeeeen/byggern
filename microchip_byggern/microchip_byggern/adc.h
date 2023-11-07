@@ -4,7 +4,7 @@
 
 #define FREQUENCY_OF_OSCILLATOR 4915200
 #define BASE_ADDRESS_ADC 0x1400;
-#define INPUT_BUFFER_SIZE 100
+#define INPUT_BUFFER_SIZE 10
 #include <avr/io.h>
 #include <math.h>
 #include <util/delay.h>

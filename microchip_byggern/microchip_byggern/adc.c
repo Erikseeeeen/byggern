@@ -80,11 +80,12 @@ input_t input_read(){
 	input_t smooth_input = input;
 	float smooth_joystick_x = 0;
 	float smooth_joystick_y = 0;
-	for(int i = input_head; i != (input_head + 1 + INPUT_BUFFER_SIZE) % INPUT_BUFFER_SIZE; i = (i - 1) % INPUT_BUFFER_SIZE)
+	
+	for(int age = 0; age < INPUT_BUFFER_SIZE; age++)
 	{
-		age = (input_head - i + INPUT_BUFFER_SIZE) % INPUT_BUFFER_SIZE + 1;
-		smooth_joystick_x += pow(1/2, age) * (float)input_buffer[i % INPUT_BUFFER_SIZE].joystick_x;
-		smooth_joystick_y += (float)input_buffer[i % INPUT_BUFFER_SIZE].joystick_y / INPUT_BUFFER_SIZE;
+		int buffer_index = (input_head + age) % INPUT_BUFFER_SIZE;
+		smooth_joystick_x += (float)input_buffer[buffer_index % INPUT_BUFFER_SIZE].joystick_x / INPUT_BUFFER_SIZE; //* pow(1/2, age);
+		smooth_joystick_y += (float)input_buffer[buffer_index % INPUT_BUFFER_SIZE].joystick_y / INPUT_BUFFER_SIZE;
 	}
 	smooth_input.joystick_x = (int)smooth_joystick_x;
 	smooth_input.joystick_y = (int)smooth_joystick_y;

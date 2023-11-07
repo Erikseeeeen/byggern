@@ -39,7 +39,7 @@ void pwm_init()
 
 void set_servo_duty()
 {
-	printf("%d    ",joystick_x);
+	// printf("%d    ",joystick_x);
 	PWM->PWM_CH_NUM[5].PWM_CDTY = PWM_CDTY_CDTY((uint32_t)((float)servo_period * (1 - pos_to_duty(joystick_x))));
 }
 

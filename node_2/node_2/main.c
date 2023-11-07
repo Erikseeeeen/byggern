@@ -39,15 +39,26 @@ int main(void)
 	printf("Hello world");
 	
 	
-
+	int counter = 0;
+	int goal_count = 0;
     /* Replace with your application code */
     while (1)
     {
 		WDT->WDT_CR = WDT_CR_KEY_PASSWD | WDT_CR_WDRSTT;
-	    PIOA->PIO_SODR |= PIO_PA20;
-	    delay_ms(100000);
-	    PIOA->PIO_CODR |= PIO_PA20;
-	    delay_ms(100000);
+	    //PIOA->PIO_SODR |= PIO_PA20;
+	    //delay_ms(100000);
+	    //PIOA->PIO_CODR |= PIO_PA20;
+	    //delay_ms(100000);
+		counter++;
+		int adc_data = adc_receive();
+		if(adc_data < 1000 && counter > 2000000)
+		{
+			goal_count++;
+			counter = 0;
+			printf("GOL");
+			printf("%d", goal_count);
+			
+		}
 		
 		
 		/*CAN_MESSAGE msg;
@@ -56,6 +67,6 @@ int main(void)
 		msg.data[0] = 'J';
 	    can_send(&msg, 0);*/
 		
-		printf("%d  ", ADC->ADC_CDR10);
+		//printf("%d  ", ADC->ADC_CDR10);
     }
 }

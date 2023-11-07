@@ -22,10 +22,11 @@ void adc_init(){
 	ADC->ADC_COR &= ~(1 << 26);
 	
 	// Begin Analog-to-Digital Conversion
-	ADC->ADC_CR |= 1;
+	ADC->ADC_CR |= 1 << 1;
 	
 }
 
 int adc_receive(){
-	
+	//printf("%d \n", ADC->ADC_CDR[10]);
+	return ADC->ADC_CDR[10];
 }
