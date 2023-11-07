@@ -14,7 +14,7 @@
 #include "uart.h"
 #include "pwm.h"
 #include "adc.h"
-
+#include "motor.h"
 
 int main(void)
 {
@@ -25,6 +25,7 @@ int main(void)
 	configure_uart();
 	pwm_init();
 	adc_init();
+	motor_init();
 	
 	
 	// Enable the peripheral clock for the PIO (Peripheral Input/Output) controller
@@ -42,13 +43,19 @@ int main(void)
 	int counter = 0;
 	int goal_count = 0;
     /* Replace with your application code */
-    while (1)
-    {
+	while (1)
+	{
+		read_encoder();
+		//printf("%d", read_encoder());
+		
 		WDT->WDT_CR = WDT_CR_KEY_PASSWD | WDT_CR_WDRSTT;
 	    //PIOA->PIO_SODR |= PIO_PA20;
 	    //delay_ms(100000);
 	    //PIOA->PIO_CODR |= PIO_PA20;
 	    //delay_ms(100000);
+		
+		
+		
 		counter++;
 		int adc_data = adc_receive();
 		if(adc_data < 1000 && counter > 2000000)

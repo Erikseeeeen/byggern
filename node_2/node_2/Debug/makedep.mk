@@ -16,6 +16,8 @@ Device_Startup\system_sam3xa.c
 
 main.c
 
+motor.c
+
 printf-stdarg.c
 
 pwm.c
