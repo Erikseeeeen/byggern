@@ -15,6 +15,7 @@
 #include "pwm.h"
 #include "adc.h"
 #include "motor.h"
+#include "dac.h"
 
 int main(void)
 {
@@ -26,6 +27,7 @@ int main(void)
 	pwm_init();
 	adc_init();
 	motor_init();
+	dac_init();
 	
 	
 	// Enable the peripheral clock for the PIO (Peripheral Input/Output) controller

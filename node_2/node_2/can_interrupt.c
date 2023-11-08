@@ -18,6 +18,7 @@
 #include "can_controller.h"
 
 #include "dac.h"
+#include "motor.h"
 #include "pwm.h"
 
 #define DEBUG_INTERRUPT 0
@@ -56,7 +57,7 @@ void CAN0_Handler( void )
 		joystick_x = message.data[0];
 		joystick_y = message.data[1];
 		int button = message.data[2];
-		printf("%d", button);
+		//printf("%d", button);
 		if(button)
 			shoot();
 		set_servo_duty();

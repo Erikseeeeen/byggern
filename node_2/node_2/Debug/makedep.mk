@@ -8,6 +8,8 @@ can_controller.c
 
 can_interrupt.c
 
+dac.c
+
 delay.c
 
 Device_Startup\startup_sam3xa.c

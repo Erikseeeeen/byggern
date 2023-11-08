@@ -14,45 +14,9 @@ void dac_init()
 	
 	dac_write_uint_voltage(0xFFFF);
 	dac_write_uint_voltage(0);
-	
-	//INIT solenoid
-	PIOC->PIO_PER |= PIO_PC13;
-	PIOC->PIO_OER |= PIO_PC13;
-	PIOC->PIO_SODR |= PIO_PC13;
 }
 
 void dac_write_uint_voltage(uint16_t signal)
 {
 	DACC->DACC_CDR = signal;
-}
-
-
-void dac_write_speed()
-{
-	float normalized_signal = (float)(joystick_y) / 128.0 - 1.0;
-	
-	if (normalized_signal < -1)
-		normalized_signal = -1;
-	if (normalized_signal > 1)
-		normalized_signal = 1;
-		
-	if(normalized_signal < 0)
-	{
-		dac_write_uint_voltage((uint16_t)(-normalized_signal * 65535));
-		// Set motor direction left
-		PIOD->PIO_CODR = PIO_PD10;
-	}
-	else
-	{
-		dac_write_uint_voltage((uint16_t)(normalized_signal * 65535));
-		// Set motor direction right
-		PIOD->PIO_SODR = PIO_PD10;
-	}
-}
-
-void shoot()
-{
-	PIOC->PIO_CODR |= PIO_PC13;
-	delay_ms(80);
-	PIOC->PIO_SODR |= PIO_PC13;
 }

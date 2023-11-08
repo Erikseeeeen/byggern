@@ -41,6 +41,7 @@ C_SRCS +=  \
 ../adc.c \
 ../can_controller.c \
 ../can_interrupt.c \
+../dac.c \
 ../delay.c \
 ../Device_Startup/startup_sam3xa.c \
 ../Device_Startup/system_sam3xa.c \
@@ -61,6 +62,7 @@ OBJS +=  \
 adc.o \
 can_controller.o \
 can_interrupt.o \
+dac.o \
 delay.o \
 Device_Startup/startup_sam3xa.o \
 Device_Startup/system_sam3xa.o \
@@ -74,6 +76,7 @@ OBJS_AS_ARGS +=  \
 adc.o \
 can_controller.o \
 can_interrupt.o \
+dac.o \
 delay.o \
 Device_Startup/startup_sam3xa.o \
 Device_Startup/system_sam3xa.o \
@@ -87,6 +90,7 @@ C_DEPS +=  \
 adc.d \
 can_controller.d \
 can_interrupt.d \
+dac.d \
 delay.d \
 Device_Startup/startup_sam3xa.d \
 Device_Startup/system_sam3xa.d \
@@ -100,6 +104,7 @@ C_DEPS_AS_ARGS +=  \
 adc.d \
 can_controller.d \
 can_interrupt.d \
+dac.d \
 delay.d \
 Device_Startup/startup_sam3xa.d \
 Device_Startup/system_sam3xa.d \
@@ -142,6 +147,13 @@ LINKER_SCRIPT_DEP+=  \
 	
 
 ./can_interrupt.o: .././can_interrupt.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 6.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM3X8E__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include"  -Og -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m3 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+./dac.o: .././dac.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 6.3.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM3X8E__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include"  -Og -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m3 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
