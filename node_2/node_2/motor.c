@@ -57,32 +57,38 @@ int read_encoder()
 	
 	//int pos = ((mj2_low | (mj2_high << 8)) + 131070) % 130616;
 	int pos = (mj2_low | (mj2_high << 8));
-	printf(" %d ", pos);
+	if(pos > 6000)
+	{
+		pos = 0;
+	}
 	return pos;
 	
 }
 
 float integral = 0;
-float Kp = 1;
+float Kp = 0.06;
 float Ki = 1;
 
 void dac_write_speed()
 {
 	// Normalized reference is between -1 and 1, it is the reference value for the PI controller.
+	// printf("%d ", joystick_y);
 	float normalized_reference = (float)(joystick_y) / 128.0 - 1.0;
 
-
-	encoder_raw = read_encoder();
+	int encoder_raw = read_encoder();
 	// Normalized y is between -1 and 1, it is the reference value for the PI controller.
-	y_normalized = (2806 - encoder_raw;) / 2806 * 2 - 1;
+	float y_normalized = (2806 - (float)encoder_raw) / 2806 * 2 - 1;
 
 	// PI controller
 	float e = normalized_reference - y_normalized;
-	u = 0
+	float u = 0;
 
-	integral += e;
+	//integral += e;
 
-	u = Kp * e + Ki * integral;
+	u = Kp * e;// + Ki * integral;
+	
+	printf("r: %-10d   y: %-10d   e: %-10d   u: %-10d   ", (int)(1000 * normalized_reference), (int)(1000 * y_normalized), (int)(1000 * e), (int)(1000 * u));
+	
 
 
 

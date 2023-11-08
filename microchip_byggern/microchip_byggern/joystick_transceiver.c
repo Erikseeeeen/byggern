@@ -7,8 +7,8 @@ void joystick_loop(input_t input)
 	msg.id = 0;
 	msg.data_length = 3;
 	
-	msg.data[0] = input.joystick_x;
-	msg.data[1] = input.joystick_y;
+	msg.data[0] = input.slider_1;
+	msg.data[1] = input.joystick_x;
 	msg.data[2] = input.button_left;
 	
 	//printf("Joystick x: %8d y: %8d                                                ", input.joystick_x, input.joystick_y);

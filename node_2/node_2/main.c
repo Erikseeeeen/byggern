@@ -44,12 +44,13 @@ int main(void)
 	
 	int counter = 0;
 	int goal_count = 0;
+	WDT->WDT_MR = WDT_MR_WDDIS;
     /* Replace with your application code */
 	while (1)
 	{
 		//printf("%d", read_encoder());
 		
-		WDT->WDT_CR = WDT_CR_KEY_PASSWD | WDT_CR_WDRSTT;
+		//WDT->WDT_CR = WDT_CR_KEY_PASSWD | WDT_CR_WDRSTT;
 	    //PIOA->PIO_SODR |= PIO_PA20;
 	    //delay_ms(100000);
 	    //PIOA->PIO_CODR |= PIO_PA20;
