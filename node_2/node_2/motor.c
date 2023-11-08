@@ -62,25 +62,49 @@ int read_encoder()
 	
 }
 
+float integral = 0;
+float Kp = 1;
+float Ki = 1;
 
 void dac_write_speed()
 {
-	float normalized_signal = (float)(joystick_y) / 128.0 - 1.0;
+	// Normalized reference is between -1 and 1, it is the reference value for the PI controller.
+	float normalized_reference = (float)(joystick_y) / 128.0 - 1.0;
+
+
+	encoder_raw = read_encoder();
+	// Normalized y is between -1 and 1, it is the reference value for the PI controller.
+	y_normalized = (2806 - encoder_raw;) / 2806 * 2 - 1;
+
+	// PI controller
+	float e = normalized_reference - y_normalized;
+	u = 0
+
+	integral += e;
+
+	u = Kp * e + Ki * integral;
+
+
+
+
+
+
+
 	
-	if (normalized_signal < -1)
-	normalized_signal = -1;
-	if (normalized_signal > 1)
-	normalized_signal = 1;
+	if (u < -1)
+	u = -1;
+	if (u > 1)
+	u = 1;
 	
-	if(normalized_signal < 0)
+	if(u < 0)
 	{
-		dac_write_uint_voltage((uint16_t)(-normalized_signal * 65535));
+		dac_write_uint_voltage((uint16_t)(-u * 65535));
 		// Set motor direction left
 		PIOD->PIO_CODR = PIO_PD10;
 	}
 	else
 	{
-		dac_write_uint_voltage((uint16_t)(normalized_signal * 65535));
+		dac_write_uint_voltage((uint16_t)(u * 65535));
 		// Set motor direction right
 		PIOD->PIO_SODR = PIO_PD10;
 	}

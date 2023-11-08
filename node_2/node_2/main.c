@@ -47,7 +47,6 @@ int main(void)
     /* Replace with your application code */
 	while (1)
 	{
-		read_encoder();
 		//printf("%d", read_encoder());
 		
 		WDT->WDT_CR = WDT_CR_KEY_PASSWD | WDT_CR_WDRSTT;
