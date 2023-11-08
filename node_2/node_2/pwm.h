@@ -5,7 +5,6 @@
 #define F_CPU 84000000UL // System clock frequency in Hz
 
 uint8_t joystick_x;
-uint8_t joystick_y;
 uint32_t servo_period;
 
 void pwm_init();

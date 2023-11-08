@@ -17,6 +17,7 @@
 
 #include "can_controller.h"
 
+#include "dac.h"
 #include "pwm.h"
 
 #define DEBUG_INTERRUPT 0
@@ -54,8 +55,13 @@ void CAN0_Handler( void )
 		
 		joystick_x = message.data[0];
 		joystick_y = message.data[1];
+		int button = message.data[2];
+		printf("%d", button);
+		if(button)
+			shoot();
 		set_servo_duty();
-
+		dac_write_speed();
+		
 		if(DEBUG_INTERRUPT)printf("message id: %d\n\r", message.id);
 		if(DEBUG_INTERRUPT)printf("message data length: %d\n\r", message.data_length);
 		for (int i = 0; i < message.data_length; i++)

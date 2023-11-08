@@ -15,6 +15,10 @@ void dac_init()
 	dac_write_uint_voltage(0xFFFF);
 	dac_write_uint_voltage(0);
 	
+	//INIT solenoid
+	PIOC->PIO_PER |= PIO_PC13;
+	PIOC->PIO_OER |= PIO_PC13;
+	PIOC->PIO_SODR |= PIO_PC13;
 }
 
 void dac_write_uint_voltage(uint16_t signal)
@@ -44,4 +48,11 @@ void dac_write_speed()
 		// Set motor direction right
 		PIOD->PIO_SODR = PIO_PD10;
 	}
+}
+
+void shoot()
+{
+	PIOC->PIO_CODR |= PIO_PC13;
+	delay_ms(80);
+	PIOC->PIO_SODR |= PIO_PC13;
 }
