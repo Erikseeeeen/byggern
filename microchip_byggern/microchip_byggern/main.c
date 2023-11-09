@@ -6,6 +6,7 @@
 #include "adc.h"
 #include "can.h"
 #include "interrupts.h"
+#include "menu.h"
 
 int main(void)
 {
@@ -19,15 +20,15 @@ int main(void)
 	interrupt_init();
 	can_init();
 	
-	int j = 0;
+	//int j = 0;
+	input_t input;
 	while(1)
 	{
-		input_t input;
-		for(int i = 0; i < 250; i++)
+		for(int i = 0; i < 100; i++)
 		{
 			input = input_read();
-			joystick_loop(input);
 			menu_input_loop(input);
+			joystick_loop(input, current_menu);
 			_delay_ms(1);
 		}
 		menu_draw_loop(input);

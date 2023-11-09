@@ -29,8 +29,9 @@ int main(void)
 	motor_init();
 	dac_init();
 	
+	disable_motor();
 	
-	// Enable the peripheral clock for the PIO (Peripheral Input/Output) controller
+	//Enable the peripheral clock for the PIO (Peripheral Input/Output) controller
 	PMC->PMC_PCER0 |= (1 << ID_PIOA);
 	
 	
@@ -76,6 +77,6 @@ int main(void)
 		msg.data[0] = 'J';
 	    can_send(&msg, 0);*/
 		
-		//printf("%d  ", ADC->ADC_CDR10);
+		//printf("%d  ", ADC->ADC_CDR[10]);
     }
 }

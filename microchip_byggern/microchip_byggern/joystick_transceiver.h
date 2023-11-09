@@ -3,8 +3,9 @@
 
 #include "can.h"
 #include "adc.h"
+//#include "menu.h"
 
-void joystick_loop(input_t input);
+void joystick_loop(input_t input, int current_menu);
 
 
 

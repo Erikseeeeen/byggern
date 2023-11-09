@@ -54,14 +54,20 @@ void CAN0_Handler( void )
 			printf("CAN0 message arrived in non-used mailbox\n\r");
 		}
 		
-		joystick_x = message.data[0];
-		joystick_y = message.data[1];
+		joystick_x = message.data[1];
+		joystick_y = message.data[0];
 		int button = message.data[2];
-		//printf("%d", button);
 		if(button)
-			shoot();
+		shoot();
 		set_servo_duty();
 		dac_write_speed();
+		int current_menu = message.data[3];
+		//printf("%d ", current_menu );
+		if(current_menu == 0)
+		disable_motor();
+		if(current_menu == 1)
+		enable_motor();
+		
 		
 		if(DEBUG_INTERRUPT)printf("message id: %d\n\r", message.id);
 		if(DEBUG_INTERRUPT)printf("message data length: %d\n\r", message.data_length);

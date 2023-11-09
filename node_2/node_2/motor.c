@@ -67,12 +67,18 @@ int read_encoder()
 
 float integral = 0;
 float Kp = 0.06;
-float Ki = 1;
+float Ki = 0.001;
 
 void dac_write_speed()
 {
-	// Normalized reference is between -1 and 1, it is the reference value for the PI controller.
-	// printf("%d ", joystick_y);
+	if(!motor_enabled)
+	{
+		dac_write_uint_voltage(0);
+		return;
+	}
+	
+	//Normalized reference is between -1 and 1, it is the reference value for the PI controller.
+	//printf("%d ", joystick_y);
 	float normalized_reference = (float)(joystick_y) / 128.0 - 1.0;
 
 	int encoder_raw = read_encoder();
@@ -82,25 +88,29 @@ void dac_write_speed()
 	// PI controller
 	float e = normalized_reference - y_normalized;
 	float u = 0;
-
-	//integral += e;
-
-	u = Kp * e;// + Ki * integral;
 	
-	printf("r: %-10d   y: %-10d   e: %-10d   u: %-10d   ", (int)(1000 * normalized_reference), (int)(1000 * y_normalized), (int)(1000 * e), (int)(1000 * u));
+	u = Kp * e + Ki * integral;
+	//printf("e: %-10d",(int)(1000*e) );
 	
 
-
-
-
-
-
-
+	
 	
 	if (u < -1)
 	u = -1;
-	if (u > 1)
+	else if (u > 1)
 	u = 1;
+	else;
+	integral += e;
+	
+	/*float abs_value = u;
+	if(abs_value < 0)
+		abs_value = -u;
+	float sign = (u > 0) * 2 - 1;
+	float u_sqrt = sign * sqrt(abs_value);
+	//printf("r: %-10d   y: %-10d   e: %-10d   u: %-10d   ", (int)(1000 * normalized_reference), (int)(1000 * y_normalized), (int)(1000 * e), (int)(1000 * u));
+	printf("u: %-10d   sqrt: %-10d   ", (int)(1000 * u), (int)(1000 * abs_value));
+	
+	u = u_sqrt;*/
 	
 	if(u < 0)
 	{
@@ -115,6 +125,26 @@ void dac_write_speed()
 		PIOD->PIO_SODR = PIO_PD10;
 	}
 }
+
+void enable_motor()
+{
+	if(motor_enabled)
+		return;
+		//printf("enabling motor");
+	//PIOD->PIO_SODR = PIO_PD9;
+	motor_enabled = 1;
+}
+
+void disable_motor()
+{
+	if(!motor_enabled)
+		return;
+		//printf("disabling motor");
+	//dac_write_speed(0);
+	//PIOD->PIO_CODR = PIO_PD9;
+	motor_enabled = 0;
+}
+
 
 void shoot()
 {

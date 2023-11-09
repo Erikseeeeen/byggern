@@ -4,19 +4,9 @@
 
 #include "adc.h"
 #include "oled.h"
+#include "can.h"
 
-const char* menu_items[2][3] = {
-	{
-		"menuA1",
-		"menuA2",
-		"menuA3"
-	},
-	{
-		"Bmenu1",
-		"Bmenu2",
-		"Bmenu3"
-	},
-};
+const char* menu_items[2][1];
 
 typedef struct MENU_INFO
 {
@@ -25,10 +15,7 @@ typedef struct MENU_INFO
 } MENU_INFO;
 
 
-const MENU_INFO menu_info[2] = {
-	{ .number_of_items=3, .select_jump={1, 1, 1, 0, 0} },
-	{ .number_of_items=3, .select_jump={0, 0, 0, 0, 0} }
-};
+const MENU_INFO menu_info[2];
 
 input_t last_input;
 uint8_t selected_position;
