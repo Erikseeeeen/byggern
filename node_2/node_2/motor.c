@@ -57,6 +57,7 @@ int read_encoder()
 	
 	//int pos = ((mj2_low | (mj2_high << 8)) + 131070) % 130616;
 	int pos = (mj2_low | (mj2_high << 8));
+    // printf("%-10d", pos);
 	if(pos > 6000)
 	{
 		pos = 0;
@@ -67,7 +68,7 @@ int read_encoder()
 
 float integral = 0;
 float Kp = 0.06;
-float Ki = 0.001;
+float Ki = 0.000001;
 
 void dac_write_speed()
 {
@@ -76,20 +77,25 @@ void dac_write_speed()
 		dac_write_uint_voltage(0);
 		return;
 	}
+	// printf("%d ", joystick_y );
+		
 	
 	//Normalized reference is between -1 and 1, it is the reference value for the PI controller.
 	//printf("%d ", joystick_y);
 	float normalized_reference = (float)(joystick_y) / 128.0 - 1.0;
+	
+	//printf("joystick_y: %-10d   normalized_reference: %-10d   ", joystick_y, (int)(1000 * normalized_reference));
+	
 
 	int encoder_raw = read_encoder();
 	// Normalized y is between -1 and 1, it is the reference value for the PI controller.
-	float y_normalized = (2806 - (float)encoder_raw) / 2806 * 2 - 1;
+	float y_normalized = (2014 - (float)encoder_raw) / 2014 * 2 - 1;
 
 	// PI controller
 	float e = normalized_reference - y_normalized;
 	float u = 0;
 	
-	u = Kp * e + Ki * integral;
+	u = Kp * e; //+ Ki * integral;
 	//printf("e: %-10d",(int)(1000*e) );
 	
 
@@ -106,9 +112,9 @@ void dac_write_speed()
 	if(abs_value < 0)
 		abs_value = -u;
 	float sign = (u > 0) * 2 - 1;
-	float u_sqrt = sign * sqrt(abs_value);
-	//printf("r: %-10d   y: %-10d   e: %-10d   u: %-10d   ", (int)(1000 * normalized_reference), (int)(1000 * y_normalized), (int)(1000 * e), (int)(1000 * u));
-	printf("u: %-10d   sqrt: %-10d   ", (int)(1000 * u), (int)(1000 * abs_value));
+	float u_sqrt = sign * sqrt(abs_value);*/
+	printf("r: %-10d   y: %-10d   e: %-10d   u: %-10d   ", (int)(1000 * normalized_reference), (int)(encoder_raw), (int)(1000 * e), (int)(1000 * u));
+	/*printf("u: %-10d   sqrt: %-10d   ", (int)(1000 * u), (int)(1000 * abs_value));
 	
 	u = u_sqrt;*/
 	
@@ -149,7 +155,7 @@ void disable_motor()
 void shoot()
 {
 	PIOC->PIO_CODR |= PIO_PC13;
-	delay_ms(80);
+	delay_ms(120);
 	PIOC->PIO_SODR |= PIO_PC13;
 }
 

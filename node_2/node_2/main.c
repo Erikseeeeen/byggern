@@ -43,6 +43,12 @@ int main(void)
 	printf("Hello world");
 	
 	
+	CAN_MESSAGE msg;
+	msg.data[0] = 1;
+	msg.id=0;
+	msg.data_length = 1;
+	
+	
 	int counter = 0;
 	int goal_count = 0;
 	WDT->WDT_MR = WDT_MR_WDDIS;
@@ -61,15 +67,28 @@ int main(void)
 		
 		counter++;
 		int adc_data = adc_receive();
-		if(adc_data < 1000 && counter > 2000000)
+		if(motor_write_speed)
+			dac_write_speed();
+		if(should_shoot)
+		{
+			shoot();
+			should_shoot = 0;
+		}
+		
+		//printf("%d ", counter);
+		if(adc_data < 1000)
 		{
 			goal_count++;
 			counter = 0;
 			printf("GOL");
 			printf("%d", goal_count);
 			
+			can_send(&msg, 0);
+			printf("sent message");
+			
 		}
 		
+		//printf("%-10d", counter);
 		
 		/*CAN_MESSAGE msg;
 		msg.data_length = 8;

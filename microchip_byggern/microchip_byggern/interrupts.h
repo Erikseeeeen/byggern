@@ -11,6 +11,7 @@
 
 #include <avr/interrupt.h>
 #include "can.h"
+#include "menu.h"
 
 void interrupt_init();
 

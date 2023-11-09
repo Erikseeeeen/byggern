@@ -16,6 +16,7 @@ void enable_motor();
 void disable_motor();
 
 int motor_enabled;
+int motor_write_speed;
 
 
 

@@ -91,6 +91,8 @@ input_t input_read(){
 	smooth_input.joystick_x = (int)smooth_joystick_x;
 	smooth_input.joystick_y = (int)smooth_joystick_y;
 	
+	smooth_input.joystick_y = (uint8_t)((128 - y_negative_scaled) + y_positive_scaled);
+	
 	//printf("%d   ", (int)(smooth_joystick_x));
 
 	return smooth_input;

@@ -29,7 +29,7 @@ int main(void)
 			input = input_read();
 			menu_input_loop(input);
 			joystick_loop(input, current_menu);
-			_delay_ms(1);
+			_delay_ms(2);
 		}
 		menu_draw_loop(input);
 	}
